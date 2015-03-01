@@ -46,7 +46,6 @@ public class TopTen extends Configured implements Tool{
 
     }
 
-    //TODO Cleanup
 
   }
 
@@ -66,7 +65,8 @@ public class TopTen extends Configured implements Tool{
         Text value = values.next();
         Map<String, String> parsed = mapper.readValue(value.toString(), Map.class);
         repToRecordMap.put(Integer.parseInt(parsed.get("rating")), new Text(value));
-        // If we have more than ten records, remove the one with the lowest rep // As this tree map is sorted in descending order, the user with
+        // If we have more than ten records, remove the one with the lowest rep
+        // As this tree map is sorted in descending order, the user with
         // the lowest reputation is the last key.
         if (repToRecordMap.size() > 10) {
           repToRecordMap.remove(repToRecordMap.firstKey());
@@ -88,19 +88,16 @@ public class TopTen extends Configured implements Tool{
     conf.setJobName("TopTen");
 
     //Setting configuration object with the Data Type of output Key and Value
-    //conf.setOutputKeyClass(Text.class);
-    //conf.setOutputValueClass(IntWritable.class);
-
     conf.setMapOutputKeyClass(NullWritable.class);
     conf.setMapOutputValueClass(Text.class);
     conf.setOutputKeyClass(NullWritable.class);
     conf.setOutputValueClass(Text.class);
 
     //Providing the mapper and reducer class names
-
     conf.setJar("TopTen.jar");
     conf.setMapperClass(TopTenMapper.class);
     conf.setReducerClass(TopTenReducer.class);
+    conf.setNumReduceTasks(1);
 
 
     //the hdfs input and output directory to be fetched from the command line
