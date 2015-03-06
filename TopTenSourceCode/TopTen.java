@@ -44,6 +44,8 @@ public class TopTen extends Configured implements Tool {
             if (repToRecordMap.size() > 10) {
                 repToRecordMap.remove(repToRecordMap.firstKey());
             }
+
+            System.out.println("Processed entry " + value.toString());
         }
 
         /*
