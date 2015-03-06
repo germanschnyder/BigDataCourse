@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jackson-core-asl-1.9.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hadoop-core-1.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-mapper-asl-1.7.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

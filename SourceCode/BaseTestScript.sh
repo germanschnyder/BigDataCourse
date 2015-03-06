@@ -1,3 +1,4 @@
+#!/bin/sh
 if [ -z "$1" ]
   then
     echo "No Test specified"
@@ -6,7 +7,7 @@ fi
 if [ -z "$2" ]
   then
     echo "No input regex specified"
-    exit 
+    exit
 
 fi
 
