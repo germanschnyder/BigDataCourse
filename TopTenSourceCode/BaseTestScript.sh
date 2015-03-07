@@ -33,4 +33,4 @@ hadoop fs -get /output$TEST output$TEST
 
 echo "Test completed !"
 echo "And the winners are:"
-#cat output$TEST/part-*
+cat output$TEST/part-*
