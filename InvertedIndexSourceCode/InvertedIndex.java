@@ -40,14 +40,14 @@ public class InvertedIndex extends Configured implements Tool {
     static String getWikipediaURL(String txt) {
 
         //lets find any url...
-        Matcher matcher = Pattern.compile("[a-z]+://[^ \n]*").matcher(txt);
+        Matcher matcher = Pattern.compile("[https]+://[^ \n]*").matcher(txt);
 
         while(matcher.find())
         {
             String url = matcher.group(0);
 
             //if the url is from wikipedia
-            if (url.contains("www.wikipedia.com"))
+            if (url.contains("wikipedia.org"))
                 //just exit...
                 return url;
         }
@@ -63,28 +63,29 @@ public class InvertedIndex extends Configured implements Tool {
         private Text link = new Text();
         private Text outkey = new Text();
 
-        //Reference to OutputCollector so we can write output once the maps have finished
-        private OutputCollector<NullWritable, Text> output2 = null;
 
         public void map(Object key, Text value, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
 
             Map<String, String> parsed = transformXmlToMap(value.toString());
 
             // Grab the necessary XML attributes
-            String txt = parsed.get("Body");
-            String postType = parsed.get("PostTypeId");
+            String txt = parsed.get("Text");
+            //String postType = parsed.get("PostTypeId");
             String row_id = parsed.get("Id");
 
             // if the body is null, or the post is a question (1), skip
-            if (txt == null || (postType != null && postType.equals("1"))) { return;
+            if (txt == null /*|| (postType != null && postType.equals("1"))*/) {
+                return;
             }
 
             // Unescape the HTML because the SO data is escaped.
             txt = StringEscapeUtils.unescapeHtml(txt.toLowerCase());
-            link.set(getWikipediaURL(txt));
-            outkey.set(row_id);
-            output.collect(link, outkey);
-
+            String url = getWikipediaURL(txt);
+            if (url != null) {
+                link.set(url);
+                outkey.set(row_id);
+                output.collect(link, outkey);
+            }
         }
     }
 
@@ -123,9 +124,9 @@ public class InvertedIndex extends Configured implements Tool {
         conf.setJobName("InvertedIndex");
 
         //Setting configuration object with the Data Type of output Key and Value
-        conf.setMapOutputKeyClass(NullWritable.class);
+        conf.setMapOutputKeyClass(Text.class);
         conf.setMapOutputValueClass(Text.class);
-        conf.setOutputKeyClass(NullWritable.class);
+        conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(Text.class);
 
         //Providing the mapper and reducer class names
