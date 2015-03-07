@@ -1,8 +1,6 @@
 <component name="libraryTable">
-  <library name="lib">
+  <library name="hadoop-core-1.0.4">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/jackson-mapper-asl-1.7.7.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/jackson-core-asl-1.9.9.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/hadoop-core-1.0.4.jar!/" />
     </CLASSES>
     <JAVADOC />
