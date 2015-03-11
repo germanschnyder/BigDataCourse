@@ -60,11 +60,16 @@ public class InvertedIndex extends Configured implements Tool {
      */
     static class WikipediaExtractor extends MapReduceBase implements Mapper<Object, Text, Text, Text> {
 
-        private Text link = new Text();
-        private Text outkey = new Text();
 
+        /* Hashmap with the partial combiners per file */
+        HashMap<String , String> combiner = new HashMap<String, String>();
+
+        //Reference to OutputCollector so we can write output once the maps have finished
+        private OutputCollector<Text, Text> output2 = null;
 
         public void map(Object key, Text value, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
+
+            output2 = output;
 
             Map<String, String> parsed = transformXmlToMap(value.toString());
 
@@ -82,11 +87,28 @@ public class InvertedIndex extends Configured implements Tool {
             txt = StringEscapeUtils.unescapeHtml(txt.toLowerCase());
             String url = getWikipediaURL(txt);
             if (url != null) {
-                link.set(url);
-                outkey.set(row_id);
-                output.collect(link, outkey);
+
+                if (!combiner.containsKey(url))
+                    combiner.put(url, row_id);
+                else
+                    combiner.put(url, combiner.get(url) + " " + row_id);
             }
         }
+
+        @Override
+        public void close() throws IOException {
+
+            Text link = new Text();
+            Text outkey = new Text();
+
+            for (String url : combiner.keySet()) {
+                link.set(url);
+                outkey.set(combiner.get(url));
+                output2.collect(link, outkey);
+
+            }
+        }
+
     }
 
 
