@@ -69,12 +69,12 @@ public class InvertedIndex extends Configured implements Tool {
             Map<String, String> parsed = transformXmlToMap(value.toString());
 
             // Grab the necessary XML attributes
-            String txt = parsed.get("Text");
-            //String postType = parsed.get("PostTypeId");
+            String txt = parsed.get("Body");
+            String postType = parsed.get("PostTypeId");
             String row_id = parsed.get("Id");
 
             // if the body is null, or the post is a question (1), skip
-            if (txt == null /*|| (postType != null && postType.equals("1"))*/) {
+            if (txt == null || (postType != null && postType.equals("1"))) {
                 return;
             }
 
