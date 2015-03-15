@@ -1,4 +1,4 @@
-REGISTER ../lib/elephant-bird-hadoop-compat-4.6.jar
+REGISTER ../lib/elephant-bird-hadoop-compat-4.6.jar;
 REGISTER ../lib/elephant-bird-core-4.6.jar;
 REGISTER ../lib/elephant-bird-pig-4.6.jar;
 REGISTER ../lib/slf4j-simple-1.7.10.jar;
