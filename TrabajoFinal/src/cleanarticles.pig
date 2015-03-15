@@ -11,9 +11,9 @@ raw_data = LOAD '../Data/Article_*.json' USING com.twitter.elephantbird.pig.load
 docs = FOREACH raw_data GENERATE FLATTEN($0#'response'#'docs') AS documents;
 
 /* just keep articles with Uruguay on their headline */
-uruguay_articles = FILTER docs BY ($0#'headline'#'main' matches '.*URUGUAY.*');
+uruguay_articles = FILTER docs BY ($0#'headline'#'main' MATCHES '.*URUGUAY.*');
 
 /* foreach article, grab the id and the publishing date */
-result = FOREACH uruguay_articles GENERATE $0#'_id' as ArticleID,  GetYear(ToDate((chararray)$0#'pub_date')) as Published;
+result = FOREACH uruguay_articles GENERATE $0#'_id' AS ArticleID,  GetYear(ToDate((chararray)$0#'pub_date')) AS Published;
 
 DUMP result;

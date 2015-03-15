@@ -12,7 +12,7 @@ do
 
             begin_date=$i"0101"
             end_date=$i"1231"
-            url="http://api.nytimes.com/svc/search/v2/articlesearch.json?q=uruguay&page=$j&sort=oldest&api-key=819d675e6f284d1abdf45623b28440ba:1:70240518&begin_date=$begin_date&end_date=$end_date"
+            url="http://api.nytimes.com/svc/search/v2/articlesearch.json?q=uruguay&page=$j&sort=oldest&api-key=$1:1:70240518&begin_date=$begin_date&end_date=$end_date"
 
             curl  $url > $file_name
 
