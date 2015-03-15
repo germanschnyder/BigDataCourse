@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 minimumsize=200
 
+if [ -z "$1" ]
+  then
+    echo "You need an Article Search API key for this"
+    echo "Usage:sh getarticles.sh nyt-api-key"
+    exit
+fi
+
 for i in {1885..2016}
 do
     endloop=0
