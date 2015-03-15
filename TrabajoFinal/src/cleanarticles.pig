@@ -14,6 +14,6 @@ docs = FOREACH raw_data GENERATE FLATTEN($0#'response'#'docs') AS documents;
 uruguay_articles = FILTER docs BY ($0#'headline'#'main' matches '.*URUGUAY.*');
 
 /* foreach article, grab the id and the publishing date */
-result = FOREACH uruguay_articles GENERATE $0#'_id' as ArticleID,  $0#'pub_date' as Published;
+result = FOREACH uruguay_articles GENERATE $0#'_id' as ArticleID,  GetYear(ToDate((chararray)$0#'pub_date')) as Published;
 
 DUMP result;
