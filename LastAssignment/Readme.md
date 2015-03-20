@@ -4,20 +4,17 @@
 
 Requirements: Pig and Hadoop present and running (e.g. Hortonworks VM 2.2)
 
+Move to src/ directory and run these steps:
 
 1.  Run getarticles.sh to get all articles that mention Uruguay on New York Times database:
 
-        sh getarticles.sh <nyt-developer-articles-api-key>
+        sh 1.getarticles.sh <nyt-developer-articles-api-key>
 
 2.  Run cleanarticles.pig script to clean metadata and dump the information that we want:
 
-        pig -x local cleanarticles.pig
+        pig -x local 2.cleanarticles.pig
 
-3.  Upload resulting files from Pig into HFS:
+3.  Run Hadoop MR to process all files and obtain final results:
 
-        //TODO
-
-4.  Run Hadoop MR to process all files and obtain final results:
-
-        //TODO
+        sh 3.get_results.sh
 
